@@ -1,5 +1,7 @@
 package com.vladeks.testapp.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
@@ -14,9 +16,10 @@ public class Question {
     private Long id;
 
     @NotBlank
+    @Column(columnDefinition = "text")
     private String text;
 
-    @NotBlank
+//    @NotBlank
     @Enumerated(EnumType.STRING)
     private QuestionType type;
 
@@ -61,6 +64,11 @@ public class Question {
 
     public void setType(QuestionType type) {
         this.type = type;
+    }
+
+    @JsonCreator
+    public void setType(String type) {
+        this.type = QuestionType.valueOf(type);
     }
 
     public Set<Answer> getAnswers() {
