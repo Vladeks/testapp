@@ -1,5 +1,6 @@
 package com.vladeks.testapp.configuration;
 
+import com.vladeks.testapp.security.MySavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -40,6 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/question").hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "/question/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.PUT, "/question/**").hasRole("ADMIN")
+                .and().formLogin()
+                .successHandler(new MySavedRequestAwareAuthenticationSuccessHandler())
                 .and().csrf().disable();
     }
 }
